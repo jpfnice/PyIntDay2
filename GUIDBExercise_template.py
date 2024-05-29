@@ -1,3 +1,8 @@
+"""
+Given this "template" try to implement the methods and portions of code left empty 
+(see the TODO comments)
+"""
+
 import tkinter as tk
 import tkinter.font as tkFont
 import tkinter.messagebox as mb
@@ -17,7 +22,8 @@ class MyWindow(tk.Tk):
         self.columnconfigure(2, weight=1)
         self.columnconfigure(3, weight=1)
        
-        self.rowconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)  # weight=1 makes the first row "higher" 
+                                        # than the other rows
         self.rowconfigure(1, weight=0)
         self.rowconfigure(2, weight=0)
         self.rowconfigure(3, weight=0)
@@ -68,23 +74,23 @@ class MyWindow(tk.Tk):
         self.onLoad()
       
     def insert(self):
-        # TO DO: insert a new product in the table
+        # TODO: insert a new product in the table
         pass
         
     def update(self):
-        # TO DO: update the selected product
+        # TODO: update the selected product
         pass
         
     def delete(self):
-        # TO DO: delete the selected product
+        # TODO: delete the selected product
         pass
         pass
           
         
     def onSelect(self, evt):
         
-        # TODO: retrive the selected product and populate, with the help of it
-        # the differents entries
+        # TODO: retrieve the selected product and populate, with the help of it
+        # the different entries
         pass
     
     def setMenu(self):
