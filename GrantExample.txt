@@ -1,0 +1,19 @@
+
+GRANT ALL PRIVILEGES ON test.product TO 'user123'@'%' IDENTIFIED BY 'strongpassword';
+
+or 
+
+CREATE USER 'user123'@'%' IDENTIFIED BY 'strongpassword';
+	+
+GRANT ALL PRIVILEGES ON *.* TO 'user123'@'%' ;
+
+or, to be more restrictive:
+
+CREATE USER 'user123'@'%' IDENTIFIED BY 'strongpassword';
+	+
+GRANT SELECT, INSERT ON epfl.product TO 'user123'@'%';
+
+epfl in this example is what is called in mariaDB a "database": a kind of collection of tables
+product in this example is the name of a table taht belong to the database "epfl".
+
+
