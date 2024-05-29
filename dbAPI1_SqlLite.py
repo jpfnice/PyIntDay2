@@ -56,7 +56,9 @@ DELETE FROM product
       WHERE qty = 0;
 
 	                                     
-                                                      
+COMMIT      # validate a transaction (the insert,delete,update done previously)                                                      
+
+ROLLBACK    # invalidate the transaction (the insert,delete,update done previously)                                                      
 """
 
 import sqlite3 # compliant with the DBAPI 2
