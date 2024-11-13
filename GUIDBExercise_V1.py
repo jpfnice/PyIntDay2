@@ -1,3 +1,16 @@
+"""
+The purpose of this code is to offer a GUI that could help to visualize and modify the SQLLite table product (this table is composed of the columns name, price and qty).
+
+This GUI, with the help of a ListBox, will make the rows of the table product appear one below the other.
+
+After having clicked on one ListBox element you gonna be able to:
+    update it
+    delete it
+    insert an updated version of it
+
+The update/delete/insert will concern both the table product and the ListBox widget.
+
+"""
 import tkinter as tk
 import tkinter.font as tkFont
 import tkinter.messagebox as mb
@@ -66,6 +79,8 @@ class MyWindow(tk.Tk):
         countE=tk.Entry(self, textvariable=self.counterInt, justify=tk.CENTER, width=6)
         countE.grid(row=4, column=1, padx=10, pady=10)
         
+        # TODO: Add the 3 buttons: insert, update and delete
+        
         loadB=tk.Button(self, text="update", command=self.update)
         loadB.grid(row=2, column=3, padx=10, pady=10)
         
@@ -75,6 +90,8 @@ class MyWindow(tk.Tk):
         loadB=tk.Button(self, text="delete", command=self.delete)
         loadB.grid(row=4, column=3, padx=10, pady=10)
         
+        # DONE
+         
         checkB=tk.Checkbutton(self, text="active", variable=self.activeBool, command=self.activate)
         checkB.grid(row=5, column=3, padx=10, pady=10)
         # the bind() method is used to register an event listener with
@@ -98,65 +115,64 @@ class MyWindow(tk.Tk):
             self.clear()
             
     def insert(self):
+        # TODO: 
         import sqlite3
-        try:
-            conn=sqlite3.connect(r"epfl.db")
-            cursor=conn.cursor()
-            cursor.execute (f"insert into product values ('{self.nameStr.get()}', {self.priceFloat.get()}, {self.qtyInt.get()})")
-            cursor.execute("commit")
-            cursor.close()
-            conn.close()
-            self.onLoad()
-        except Exception as ex:
-            print(ex)
-            
+        with sqlite3.connect(r"epfl.db") as conn:
+            try:
+                cursor=conn.cursor()
+                cursor.execute (f"insert into product values ('{self.nameStr.get()}', {self.priceFloat.get()}, {self.qtyInt.get()})")
+                cursor.execute("commit")
+                cursor.close()
+                self.onLoad() 
+            except Exception as ex:
+                print(ex)
+           
     def countRows(self):
         import sqlite3
-        try:
-            conn=sqlite3.connect(r"epfl.db")
-            cursor=conn.cursor()
-            cursor.execute ("select count(*) from product")
-            while True:
-                row = cursor.fetchone()
-                if row == None: break
+        with sqlite3.connect(r"epfl.db") as conn:
+            try:
+                cursor=conn.cursor()
+                cursor.execute ("select count(*) from product")
+                while True:
+                    row = cursor.fetchone()
+                    if row == None: break
+                    cursor.close()
+                    return (int(row[0]))
                 cursor.close()
-                conn.close()
-                return (int(row[0]))
-            cursor.close()
-            conn.close()
-            self.onLoad()
-        except Exception as ex:
-            print(ex)    
+                self.onLoad()
+            except Exception as ex:
+                print(ex)    
             
     def update(self):
+        # TODO: 
         import sqlite3
-        try:
-            conn=sqlite3.connect(r"epfl.db")
-            cursor=conn.cursor()
-            cursor.execute (f"update product set price={self.priceFloat.get()}, qty={self.qtyInt.get()} where name='{self.nameStr.get()}'")
-            cursor.execute("commit")
-            cursor.close()
-            conn.close()
-            self.onLoad() 
-        except Exception as ex:
-            print(ex)
-        
+        with sqlite3.connect(r"epfl.db") as conn:
+            try:
+                
+                cursor=conn.cursor()
+                cursor.execute (f"update product set price={self.priceFloat.get()}, qty={self.qtyInt.get()} where name='{self.nameStr.get()}'")
+                cursor.execute("commit")
+                cursor.close()
+                self.onLoad()                
+            except Exception as ex:
+                print(ex)
+         
     def delete(self):
+        # TODO: 
         import sqlite3
-        try:
-            conn=sqlite3.connect(r"epfl.db")
-            cursor=conn.cursor()
-            cursor.execute (f"delete from product where name='{self.nameStr.get()}'")
-            cursor.execute("commit")
-            cursor.close()
-            conn.close()
-            self.onLoad() 
-            
-        except Exception as ex:
-            print(ex)
+        with sqlite3.connect(r"epfl.db") as conn:
+            try:
+                conn=sqlite3.connect(r"epfl.db")
+                cursor=conn.cursor()
+                cursor.execute (f"delete from product where name='{self.nameStr.get()}'")
+                cursor.execute("commit")
+                cursor.close()
+                self.onLoad() 
+            except Exception as ex:
+                print(ex)
           
     def onSelect(self, evt):
-
+        # TODO: 
         theListBox = evt.widget # not needed if you have a reference to the listB object
         try:
             index = int(theListBox.curselection()[0])
@@ -191,18 +207,17 @@ class MyWindow(tk.Tk):
         self.listB.delete(0,tk.END)
         self.counterInt.set(self.countRows())
         import sqlite3
-        try:
-            conn=sqlite3.connect(r"epfl.db")
-            cursor=conn.cursor()
-            cursor.execute ("SELECT * FROM product")
-            while True:
-                row = cursor.fetchone()
-                if row == None: break
-                self.listB.insert(tk.END, f"{row[0]:20s} * {row[1]:10.2f} * {row[2]:5}")
-            cursor.close()
-            conn.close()
-        except Exception as ex:
-            print(ex)
+        with sqlite3.connect(r"epfl.db") as conn:
+            try:
+                cursor=conn.cursor()
+                cursor.execute ("SELECT * FROM product")
+                while True:
+                    row = cursor.fetchone()
+                    if row == None: break
+                    self.listB.insert(tk.END, f"{row[0]:20s} * {row[1]:10.2f} * {row[2]:5}")
+                cursor.close()
+            except Exception as ex:
+                print(ex)
       
     def about(self): 
         mb.showinfo("A tkinter example", "Version 1.0")       
