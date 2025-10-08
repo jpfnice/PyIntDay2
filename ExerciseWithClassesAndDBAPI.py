@@ -185,10 +185,14 @@ class ListOfRecord:
             
 if __name__ == "__main__":
 # lofr=ListOfRecord.read_sql("temperatures")
-      
-# lofr=ListOfRecord.read_sql("temperatures", "epflBis.db")
-    lofr=ListOfRecord.readFromFile("myfile.out")
+
+    lofr=ListOfRecord.parseFile("measures.txt")
     for r in lofr:
         print(r)
-        
-#    lofr.saveIntoFile("myfile.out")
+    lofr.to_sql("temperatures","epfl_2025.db")    
+
+    print("Construction of a second list of records with the help of a SQLite table:")
+    lofrBis=ListOfRecord.read_sql("temperatures", "epfl_2025.db")
+    for r in lofrBis:
+        print(r)
+    
