@@ -11,8 +11,8 @@ You could then try to determine the most efficient version with the help of the 
 """
 import random
 import threading
-
-import queue
+import time
+import queue # contain some "threadsafe" data types (here we use Queue)
 random.seed(1)   
  
 dataset=[]
@@ -22,9 +22,11 @@ for i in range(100):
 def factorial(n):
     total=1
     for i in range(1,n+1):
+        time.sleep(0.002)
         total *= i
     return total    
 
+q=queue.Queue() 
 
 def computeFactorial(data, q):
     for i in data:
@@ -34,7 +36,6 @@ def versionWithThreads():
 
     numberOfThreads=5
     
-    q=queue.Queue()    
     threads = []
     for i in range(numberOfThreads):
         t=threading.Thread(target=computeFactorial, args=(dataset[i*20:(i+1)*20], q))
@@ -44,13 +45,17 @@ def versionWithThreads():
     for t in threads:
         t.join()
         
-    # while not q.empty():
-    #     print(q.get())
 
 versionWithThreads()
+
 if __name__ == '__main__':       
     import timeit
-    print(timeit.timeit("versionWithThreads()", setup="from __main__ import versionWithThreads", number=1000))
+    number=5
+    result=timeit.timeit("versionWithThreads()", setup="from __main__ import versionWithThreads", number=number)
+    print(f"It took {result} to run the code {number} times -> average execution time: {result/number:.6f}")
         
-
+    # print("Here is what the queue contains:")
+    # print("Q size:",q.qsize())
+    # while not q.empty():
+    #     print(q.get(), end="-")
 

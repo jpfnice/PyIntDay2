@@ -1,5 +1,6 @@
 import random
 import multiprocessing
+import time
 
 random.seed(1)
 
@@ -10,6 +11,7 @@ for i in range(100):
 def factorial(n):
     total=1
     for i in range(1,n+1):
+        time.sleep(0.002)
         total *= i
     return total    
 
@@ -35,11 +37,13 @@ def main():
 #     while not q.empty():
 #         print(q.get())
         
-# if __name__ == '__main__': 
-#     main()   
+
 if __name__ == '__main__':       
     import timeit
-    print(timeit.timeit("main()", setup="from __main__ import main", number=10))
+    number=5
+    result=timeit.timeit("main()", setup="from __main__ import main", number=number)
+    print(f"It took {result} to run the code {number} times -> average execution time: {result/number:.6f}")
+    
   
  
  
