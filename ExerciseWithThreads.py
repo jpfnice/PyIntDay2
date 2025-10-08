@@ -44,18 +44,24 @@ def versionWithThreads():
         
     for t in threads:
         t.join()
+
         
 
 versionWithThreads()
 
+print("Here is what the queue contains:")
+print("Q size:",q.qsize())
+ix=1
+while not q.empty():
+    print(ix,"->",q.get())
+    ix+=1
+        
+        
 if __name__ == '__main__':       
     import timeit
     number=5
     result=timeit.timeit("versionWithThreads()", setup="from __main__ import versionWithThreads", number=number)
     print(f"It took {result} to run the code {number} times -> average execution time: {result/number:.6f}")
         
-    # print("Here is what the queue contains:")
-    # print("Q size:",q.qsize())
-    # while not q.empty():
-    #     print(q.get(), end="-")
+
 
