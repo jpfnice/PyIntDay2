@@ -179,7 +179,6 @@ class ListOfRecord:
         drop table if exists temperatures
         
         create table temperatures (city varchar(20), 
-    
                                    time time,
                                    date date,
                                    temp float)
@@ -187,9 +186,11 @@ class ListOfRecord:
         try:
             conn=sqlite3.connect(dbName)
             cursor=conn.cursor()
-            for e in self:
+            for e in self.data:
                 #print (e.time, e.date.replace('/','-'))
-                cursor.execute(f"insert into {tableName} values ('{e.city}', '{e.time}','{e.date.replace('/','-')}',  {e.temperature})")
+                #cursor.execute(f"insert into {tableName} values ('{e.city}', '{e.time}','{e.date.replace('/','-')}',  {e.temperature})")
+                
+                cursor.execute(f"insert into {tableName} values (?,?,?,?)", (e.city, e.time, e.date.replace('/','-'), e.temperature))
                 cursor.execute("commit") 
             cursor.close()
             conn.close()
@@ -197,11 +198,18 @@ class ListOfRecord:
             print(ex)
             
 if __name__ == "__main__":
-# lofr=ListOfRecord.read_sql("temperatures")
-      
-# lofr=ListOfRecord.read_sql("temperatures", "epflBis.db")
-    lofr=ListOfRecord.readFromFile("myfile.out")
+
+ # Step 1: I create a list of record witht he help of the file
+ #  "measures.txt"I then store the lits of record into an sqlite table:
+     
+    # lofr=ListOfRecord.parseFile("measures.txt")
+    # for r in lofr:
+    #     print(r)
+        
+    # lofr.to_sql("temperatures","epfl_2025.db")
+    
+# Step 2: I call the method read_sql (it is a static method) to create
+# a new list of record:
+    lofr=ListOfRecord.read_sql("temperatures","epfl_2025.db")
     for r in lofr:
         print(r)
-        
-#    lofr.saveIntoFile("myfile.out")
