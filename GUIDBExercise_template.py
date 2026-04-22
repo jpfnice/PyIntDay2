@@ -1,4 +1,15 @@
 """
+The purpose of this code is to offer a GUI that could help to visualize and modify the SQLLite table product (this table is composed of the columns name, price and qty).
+
+This GUI, with the help of a ListBox, will make the rows of the table product appear one below the other.
+
+After having clicked on one ListBox element you gonna be able to:
+    update it
+    delete it
+    insert an updated version of it
+
+The update/delete/insert will concern both the table product and the ListBox widget.
+
 Given this "template" try to implement the methods and portions of code left empty 
 (see the TODO comments)
 """
