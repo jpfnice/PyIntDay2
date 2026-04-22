@@ -1,4 +1,17 @@
+"""
+In this version, ListOfRecord is NOT iterable
 
+This version of ListOfRecord gives the possibility via the method to_sql()
+to save the content of a ListOfRecord into a sqlite database table
+
+Another method, read_sql() gives the possibility to construct a new ListOfRecord with the content of an existing sqlite table
+
+Note: the sqllite table must have the proper structure. For instance, it may 
+be created with this sql statement:
+    
+    create table temperatures (city varchar(20), time time, date date, temp float)
+
+"""
 import pickle
 import sqlite3
 
@@ -185,14 +198,10 @@ class ListOfRecord:
             
 if __name__ == "__main__":
 # lofr=ListOfRecord.read_sql("temperatures")
-
-    lofr=ListOfRecord.parseFile("measures.txt")
+      
+# lofr=ListOfRecord.read_sql("temperatures", "epflBis.db")
+    lofr=ListOfRecord.readFromFile("myfile.out")
     for r in lofr:
         print(r)
-    lofr.to_sql("temperatures","epfl_2025.db")    
-
-    print("Construction of a second list of records with the help of a SQLite table:")
-    lofrBis=ListOfRecord.read_sql("temperatures", "epfl_2025.db")
-    for r in lofrBis:
-        print(r)
-    
+        
+#    lofr.saveIntoFile("myfile.out")
