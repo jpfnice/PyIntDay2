@@ -1,4 +1,10 @@
-
+"""
+Note: the goal of this script is to display a counter incremented every 0.5 seconds
+This version is working thanks to the use of a thread. This thread is in charge
+of executing the loop that increment the counter. The tkinter "engine" is not 
+locked anymore, it is able to treat any other event or display any widget
+    
+"""
 
 import tkinter as tk
 import threading

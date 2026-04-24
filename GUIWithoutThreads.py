@@ -1,4 +1,10 @@
-
+"""
+Note: the goal is to display a counter incremented every 0.5 seconds
+This version those not work:
+    the event listener is doing a loop, the tkinter "engine" is locked in this
+    loop and is not able to treat any other event or display any widget
+    
+"""
 
 import tkinter as tk
 import time
